@@ -63,7 +63,7 @@ $kategori = mysqli_query($conn, "SELECT * FROM kategori");
                 <th scope="row"><?= $i++; ?></th>
                 <td><?= $kat['nama_kategori']; ?></td>
                 <td><a href="#" class="badge text-bg-warning text-decoration-none">ubah</a>
-                <a href="hapus.php?id=<?= $kat['id']; ?>" class="badge text-bg-danger text-decoration-none" >Hapus</a></td>
+                <a href="hapus.php?id=<?= $kat['id']; ?>" onclick="return confirm('Yakin ingin menghapus data ini?');" class="badge text-bg-danger text-decoration-none" >Hapus</a></td>
             </tr>
         <?php endforeach ?>
         </tbody>
