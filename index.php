@@ -63,7 +63,7 @@ $kategori = mysqli_query($conn, "SELECT * FROM kategori");
                 <th scope="row"><?= $i++; ?></th>
                 <td><?= $kat['nama_kategori']; ?></td>
                 <td><a href="#" class="badge text-bg-warning text-decoration-none">ubah</a>
-                <a href="" class="badge text-bg-danger text-decoration-none" >Hapus</a></td>
+                <a href="hapus.php?id=<?= $kat['id']; ?>" class="badge text-bg-danger text-decoration-none" >Hapus</a></td>
             </tr>
         <?php endforeach ?>
         </tbody>
@@ -87,7 +87,7 @@ $kategori = mysqli_query($conn, "SELECT * FROM kategori");
           <form method="POST" action="tambah.php">
             <div class="modal-body">
               <label class="form-label">Nama kategori</label>
-              <input class="form-control form-control-lg" type="text" placeholder="Masukkan nama kategori disini" name="tkat">
+              <input class="form-control form-control-lg" type="text" placeholder="Masukkan nama kategori disini" name="tkat" required>
             </div>
           
           
