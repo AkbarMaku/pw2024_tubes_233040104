@@ -7,12 +7,12 @@
 
         if ($query) {
             echo "<script>
-                    alert('Simpan data berhasil');
+                    alert('Tambah data berhasil');
                     document.location='index.php';
                 </script>";
         } else {
             echo "<script>
-                    alert('Simpan data gagal');
+                    alert('Tambah data gagal');
                     document.location='index.php';
                 </script>";
         }
