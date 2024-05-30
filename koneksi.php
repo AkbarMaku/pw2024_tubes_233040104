@@ -14,4 +14,43 @@
         
             return mysqli_affected_rows($conn);
         }
-?>
+
+        // Fungsi tambah
+        function tambahProduk($data) {
+            global $conn;
+            
+            $nama_produk = htmlspecialchars($data['namaPdk']);
+            $harga_produk = htmlspecialchars($data['hargaPdk']);
+            $deskripsi_produk = htmlspecialchars($data['deskPdk']);
+            $kode_produk = htmlspecialchars($data['kodePdk']);
+            $kategori = htmlspecialchars($data['id_kategori']);
+            $foto_produk = ($data['fotoPdk']);
+
+            $query = "INSERT INTO produk 
+                      VALUES ('', '$nama_produk', '$harga_produk', '$deskripsi_produk', '$kode_produk', '$kategori', '$foto_produk')
+                    ";
+
+            mysqli_query($conn, $query) or die(mysqli_error($conn));
+        }
+
+        function query($query) {
+            global $conn;
+
+           $result = mysqli_query($conn,$query);
+           
+           $rows = [];
+           while($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+           }
+
+           return $rows;
+        }
+
+        function cari($keyword) {
+            $query = "SELECT * FROM kategori
+                        WHERE
+                      nama_kategori LIKE '%$keyword%'
+                    ";
+
+            return query($query);
+        }

@@ -84,54 +84,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="bg-primary text-center mt-3">
-        <div class="container p-4 pb-0">
-            <section class="mb-5">
-
-                <a
-                data-mdb-ripple-init
-                class="btn text-white btn-floating m-1"
-                style="background-color: #3b5998;"
-                href="#!"
-                role="button">
-                <i class='bx bxl-facebook-circle bx-sm'></i>
-                </a>
-
-                <a
-                data-mdb-ripple-init
-                class="btn text-white btn-floating m-1"
-                style="background-color: #ac2bac;"
-                href="#!"
-                role="button">
-                <i class='bx bxl-instagram bx-sm'></i>
-                </a>
-
-                <a
-                data-mdb-ripple-init
-                class="btn text-white btn-floating m-1"
-                style="background-color: #0082ca;"
-                href="#!"
-                role="button">
-                <i class="bx bxl-linkedin bx-sm"></i>
-                </a>
-        
-                <a
-                data-mdb-ripple-init
-                class="btn text-white btn-floating m-1"
-                style="background-color: #333333;"
-                href="#!"
-                role="button">
-                <i class="bx bxl-github bx-sm"></i>
-                </a>
-            </section>
-        </div>
-
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">© 2024 Copyright: NaoStore</div>
-
-    </footer>
-    <!-- End footer -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>

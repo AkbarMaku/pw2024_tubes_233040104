@@ -1,7 +1,7 @@
 <?php 
     require '../koneksi.php';
     
-    if (isset($_POST['simpan'])) {
+    if (isset($_POST['simpanKat'])) {
         $query = mysqli_query($conn, "INSERT INTO kategori (nama_kategori)
                                       VALUES ('$_POST[tkat]')");
 
@@ -18,4 +18,3 @@
         }
         
     }
-?>
