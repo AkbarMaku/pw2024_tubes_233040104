@@ -1,18 +1,15 @@
 <?php
-require "../koneksi.php";
+    require "../koneksi.php";
 
-$queryProduk = query("SELECT * FROM produk");
-$jumlahProduk = count($queryProduk);
+    $queryProduk = query("SELECT * FROM produk");
+    $jumlahProduk = count($queryProduk);
 
-if (isset($_POST['tambahProduk'])) {
-    //Jika data berhasil ditambahkan
-    if(tambahProduk($_POST) > 0) {
-      echo "<script>
-              alert('data berhasil ditambah');
-              document.location.href = 'index.php';
-            </script>";
+    $kategori = getKategori();
+
+    if(isset($_POST["cariPdk"])) {
+        $queryProduk = cariPdk($_POST["keywordPdk"]);
     }
-  }
+
 ?>
 
 <!doctype html>
@@ -58,9 +55,9 @@ if (isset($_POST['tambahProduk'])) {
                         <a class="nav-link" href="kategori.php">Kategori</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Cari</button>
+                <form class="d-flex" role="search" action="" method="POST">
+                    <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="keywordPdk" autofocus autocomplete="off">
+                    <button class="btn btn-outline-success" type="submit" name="cariPdk">Cari</button>
                 </form>
             </div>
         </div>
@@ -72,11 +69,11 @@ if (isset($_POST['tambahProduk'])) {
             <?php foreach ($queryProduk as $data) : ?>
                 <div class="col-md-4">
                     <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
+                        <img src="<?= $data['img'] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?= $data['nama_produk'] ?></h5>
                             <p class="card-text"><?= $data['harga_produk'] ?></p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="detail-produk.php?id_produk=<?= $data['id_produk'] ?>" class="btn btn-primary">Lihat detail produk</a>
                         </div>
                     </div>
                 </div>
@@ -102,25 +99,25 @@ if (isset($_POST['tambahProduk'])) {
 
                             <label class="form-label">Nama produk</label>
                             <input class="form-control form-control-lg" type="text" placeholder="Masukkan nama produk disini" name="namaPdk">
-                            
+
                             <label class="form-label">Harga produk</label>
                             <input class="form-control form-control-lg" type="text" placeholder="Masukkan nama produk disini" name="hargaPdk">
-                            
+
                             <label for="exampleFormControlTextarea1" class="form-label">Deskripsi produk</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="deskPdk"></textarea>
-                            
+
                             <label class="form-label">Kode produk</label>
                             <input class="form-control form-control-lg mb-3" type="text" placeholder="Masukkan nama produk disini" name="kodePdk">
-                            
+
                             <select class="form-select" aria-label="Default select example" name="id_kategori">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option selected>Kategori</option>
+                                <?php foreach ($kategori as $kat) : ?>
+                                    <option value="<?= $kat['id_kategori']; ?>"><?= htmlspecialchars($kat['nama_kategori']); ?></option>
+                                <?php endforeach; ?>
                             </select>
-                            
+
                             <label class="form-label mt-3">Foto produk</label>
-                            <input class="form-control form-control-lg" type="file" placeholder="Masukkan nama produk disini" name="fotoPdk">
+                            <input class="form-control form-control-lg" type="file" placeholder="Masukkan nama produk disini" name="img">
                         </div>
 
                         <div class="modal-footer">

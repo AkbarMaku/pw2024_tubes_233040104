@@ -1,15 +1,18 @@
 body {
-    background-color: aqua;
+    background-image: url(../image/latar.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 65vh;
-    width: 65vh;
-    color: black;
+    height: 75vh;
+    width: 75vh;
     margin-top: 70px;
+    color: white;
 }
 
 .content {
@@ -18,15 +21,17 @@ body {
     align-items: center;
     flex-direction: column;
     margin: auto;
-    background-color: gray;
+    background-color: rgba(0, 0, 0, 0.5);
     width: 90%;
     height: 90%;
     font-size: 1rem;
     font-family: "Lucida" Grande, sans-serif;
+    border: 1px solid #fff;
     border-radius: 20px;
+    backdrop-filter: blur(10px);
 }
 h2 {
-    color: black;
+    color: white;
 }
 input {
     margin-top: 10px;
@@ -42,27 +47,33 @@ button {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    background-color: skyblue;
+    background-color: white;
     border-radius: 5px;
     padding: 5px;
-    border: 2px solid black;
+    border: 2px solid white;
 }
 p {
     color: black;
 }
 .profile {
-    /* border-radius: 20px;
+    border-radius: 50%;
     width: 150px;
     height: 150px;
     background-image: url(../image/logo.jpg);
     background-size: cover;
     background-position: center;
     border: 1px solid white;
-    margin-bottom: 10px; */
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
-.alert {
-    width: 25%;
-    margin-left: 480px;
+.regis {
     text-align: center;
-    align-items: center;
+    margin-top: 5px;
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .content {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
 }

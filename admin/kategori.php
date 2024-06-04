@@ -4,8 +4,8 @@
     $queryKategori = query("SELECT * FROM kategori");
     $jumlahKategori = count($queryKategori);
 
-    if(isset($_POST["cari"])) {
-        $queryKategori = cari($_POST["keyword"]);
+    if(isset($_POST["cariKat"])) {
+        $queryKategori = cariKat($_POST["keywordKat"]);
     }
 ?>
 
@@ -52,8 +52,8 @@
                 </li>
             </ul>
             <form class="d-flex" role="search" action="" method="POST">
-                <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="keyword" autofocus autocomplete="off">
-                <button class="btn btn-outline-success" type="submit" name="cari">Cari</button>
+                <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="keywordKat" autofocus autocomplete="off">
+                <button class="btn btn-outline-success" type="submit" name="cariKat">Cari</button>
             </form>
             </div>
         </div>
@@ -86,7 +86,7 @@
                         <td><?php echo $data['nama_kategori'] ?></td>
                         <td>
                         <a href="ubah-kategori.php?id=<?php echo $data['id_kategori'];?>" class="badge text-bg-warning text-decoration-none">ubah</a>
-                        <a href="hapus.php?p=<?php echo $data['id_kategori']; ?>" onclick="return confirm('Yakin ingin menghapus data ini?');" class="badge text-bg-danger text-decoration-none" >Hapus</a>
+                        <a href="hapus-kategori.php?p=<?php echo $data['id_kategori']; ?>" onclick="return confirm('Yakin ingin menghapus data ini?');" class="badge text-bg-danger text-decoration-none" >Hapus</a>
                         </td>
                     </tr>
                     <?php $i++;?>

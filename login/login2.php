@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/login2.css">
   </head>
   <body>
     <div class="container">
@@ -33,6 +33,11 @@
                   <label for="password">Password :</label>
                   <input type="password" name="password" id="password" placeholder=" Masukkan password disini">
                   <br>
+                  <?php if(isset($error)) : ?>
+                  <div class="regis">
+                    <a href="regis.php">Belum punya akun? Daftar sekarang</a>
+                  </div>
+                  <?php endif; ?>
                   <button type="submit" name="submit">Login</button>
               </form>
           </div>

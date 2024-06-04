@@ -1,18 +1,18 @@
 <?php 
     require '../koneksi.php';
 
-    $id = $_GET["p"];
+    $id = $_GET["id"];
 
-    if(hapus($id) > 0) {
+    if(hapusProduk($id) > 0) {
         echo "<script>
             alert('Data berhasil dihapus');
-            document.location='kategori.php';
+            document.location='produk.php';
         </script>
         ";
     } else {
         echo "<script>
             alert('Gagal menghapus data');
-            document.location='kategori.php';
+            document.location='produk.php';
         </script>
         ";
     }
