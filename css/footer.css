@@ -1,0 +1,13 @@
+:root {
+    --warna: #2C2F31;
+    --warna_2: #383c3d;
+    --black: #020403;
+    --putih: #f5fefd;
+    --biru: #63c5da;
+}
+
+.footer {
+    background: var(--warna_2);
+    color: var(--putih);
+    margin-top: 300px;
+}

@@ -111,6 +111,29 @@ function getKategori()
     return $kategori;
 }
 
+// Fungsi untuk mengambil semua produk dari database
+function getProduk()
+{
+    global $conn;
+    $query = "SELECT id_produk,
+                     nama_produk,
+                     harga_produk,
+                     deskripsi_produk,
+                     kode_produk,
+                     img
+              FROM produk";
+    $result = mysqli_query($conn, $query);
+    $produk = [];
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $produk[] = $row;
+        }
+    } else {
+        die('Query failed: ' . mysqli_error($conn));
+    }
+    return $produk;
+}
+
 // Fungsi untuk mengambil data produk berdasarkan id_produk
 function getProdukById($id_produk)
 {
@@ -144,25 +167,37 @@ function query($query)
 }
 
 // Fungsi hapus kategori
-function hapusKategori($id) {
+function hapusKategori($id)
+{
     global $conn;
-    mysqli_query($conn,"DELETE FROM kategori WHERE id_kategori = $id");
+    mysqli_query($conn, "DELETE FROM kategori WHERE id_kategori = $id");
 
     return mysqli_affected_rows($conn);
 }
 
 // Fungsi hapus produk
-function hapusProduk($id) {
+function hapusProduk($id)
+{
     global $conn;
-    mysqli_query($conn,"DELETE FROM produk WHERE id_produk = $id");
+    mysqli_query($conn, "DELETE FROM produk WHERE id_produk = $id");
+
+    return mysqli_affected_rows($conn);
+}
+
+// Fungsi hapus produk
+function hapusAdmin($id)
+{
+    global $conn;
+    mysqli_query($conn, "DELETE FROM user WHERE id_user = $id");
 
     return mysqli_affected_rows($conn);
 }
 
 // Fungsi ubah produk
-function ubah($data) {
+function ubahPdk($data)
+{
     global $conn;
-    
+
     $id = $data["id"];
     $nama_produk = htmlspecialchars($data['namaPdk']);
     $harga_produk = htmlspecialchars($data['hargaPdk']);
@@ -170,14 +205,68 @@ function ubah($data) {
     $kode_produk = htmlspecialchars($data['kodePdk']);
     $kategori = htmlspecialchars($data['id_kategori']);
 
+    // Jika ada file yang diunggah, proses file tersebut
+    if ($_FILES['img']['error'] === UPLOAD_ERR_OK) {
+        $foto_produk = uploadFile($_FILES['img']);
+        if (!$foto_produk) {
+            die('Upload file gagal');
+        }
+    } else {
+        // Jika tidak ada file yang diunggah, gunakan file lama
+        $foto_produk = $data['img_lama'];
+    }
+
     $query = "UPDATE produk SET
                 nama_produk = '$nama_produk',
                 harga_produk = '$harga_produk',
                 deskripsi_produk = '$deskripsi_produk',
                 kode_produk = '$kode_produk',
-                id_kategori = '$kategori'
-              WHERE id_produk = $id
-            ";
+                id_kategori = '$kategori',
+                img = '$foto_produk'
+              WHERE id_produk = $id";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+// Fungsi ubah admin
+function ubahAdmin($data)
+{
+    global $conn;
+
+    $id = $data["id"];
+    $username = strtolower(stripslashes($data["username"]));
+    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+
+    // Konfirmasi username
+    $result = mysqli_query($conn, "SELECT username FROM user WHERE username = '$username'");
+
+    if (mysqli_fetch_assoc($result)) {
+        echo "<script>
+                 alert('username yang dipilih sudah terdaftar');
+             </script>";
+
+        return false;
+    }
+
+    // Cek konfirmasi password
+    if ($password !== $password2) {
+        echo "<script>
+                 alert('konfirmasi password tidak sesuai');
+             </script>";
+
+        return false;
+    }
+
+    // Enkripsi password
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = "UPDATE user SET
+                username = '$username',
+                password = '$password'
+              WHERE id_user = $id";
 
     mysqli_query($conn, $query);
 
@@ -204,4 +293,42 @@ function cariPdk($keywordPdk)
                     ";
 
     return query($query);
+}
+
+// Fungsi registrasi
+function register($data)
+{
+    global $conn;
+
+    $username = strtolower(stripslashes($data["username"]));
+    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+
+    // Konfirmasi username
+    $result = mysqli_query($conn, "SELECT username FROM user WHERE username = '$username'");
+
+    if (mysqli_fetch_assoc($result)) {
+        echo "<script>
+                alert('username yang dipilih sudah terdaftar');
+            </script>";
+
+        return false;
+    }
+
+    // Cek konfirmasi password
+    if ($password !== $password2) {
+        echo "<script>
+                alert('konfirmasi password tidak sesuai');
+            </script>";
+
+        return false;
+    }
+
+    // Enkripsi password
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Menambah user baru ke database
+    mysqli_query($conn, "INSERT INTO user (username, password) VALUES('$username', '$password')");
+
+    return mysqli_affected_rows($conn);
 }

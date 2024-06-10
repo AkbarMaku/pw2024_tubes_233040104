@@ -1,17 +1,25 @@
-<?php 
-    require "../koneksi.php";
+<?php
+session_start();
 
-    $queryKategori = query("SELECT * FROM kategori");
-    $jumlahKategori = count($queryKategori);
+if (!isset($_SESSION["login"])) {
+    header("location: ../login/login.php");
+    exit;
+}
 
-    if(isset($_POST["cariKat"])) {
-        $queryKategori = cariKat($_POST["keywordKat"]);
-    }
+require "../koneksi.php";
+
+$queryKategori = query("SELECT * FROM kategori");
+$jumlahKategori = count($queryKategori);
+
+if (isset($_POST["cariKat"])) {
+    $queryKategori = cariKat($_POST["keywordKat"]);
+}
 ?>
 
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -27,69 +35,73 @@
 
     <!-- End link -->
 
-  </head>
-  <body>
+</head>
+
+<body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand me-4" href="#">
-            <img src="../image/logo.jpg" alt="Logo" width="50" height="50" class="d-inline-block align-text-center"> NaoStore
+                <img src="../image/logo.jpg" alt="Logo" width="50" height="50" class="d-inline-block align-text-center"> NaoStore
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item me-4">
-                <a class="nav-link active" href="kategori.php">Kategori</a>
-                </li>
-                <li class="nav-item me-4">
-                <a class="nav-link" href="index.php">Beranda</a>
-                </li>
-                <li class="nav-item me-4">
-                <a class="nav-link" href="produk.php">Produk</a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search" action="" method="POST">
-                <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="keywordKat" autofocus autocomplete="off">
-                <button class="btn btn-outline-success" type="submit" name="cariKat">Cari</button>
-            </form>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item me-4">
+                        <a class="nav-link active" href="kategori.php">Kategori</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="index.php">Beranda</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="produk.php">Produk</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="logout.php">Logout</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search" action="" method="POST">
+                    <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="keywordKat" autofocus autocomplete="off" id="keywordKat">
+                    <button class="btn btn-outline-success" type="submit" name="cariKat" id="cariKat">Cari</button>
+                </form>
             </div>
         </div>
     </nav>
     <!-- End navbar -->
 
     <!-- Table -->
-    <div class="container mt-3">
+    <div class="container mt-3" id="container">
         <h2>DAFTAR KATEGORI KENDERAAN HONDA</h2>
         <br>
         <table class="table">
             <thead>
                 <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Nama Kategori</th>
-                <th scope="col">Aksi</th>
+                    <th scope="col">No.</th>
+                    <th scope="col">Nama Kategori</th>
+                    <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if($jumlahKategori==0) : ?>
+                <?php if ($jumlahKategori == 0) : ?>
                     <tr>
                         <td colspan=3 class="text-center">Data kategori tidak tersedia</td>
                     </tr>
                 <?php endif; ?>
-                <?php if($jumlahKategori > 0) :?>
-                <?php $i = 1;?>
-                <?php foreach($queryKategori as $data) : ?>
-                    <tr>
-                        <td><?php echo $i; ?></td>
-                        <td><?php echo $data['nama_kategori'] ?></td>
-                        <td>
-                        <a href="ubah-kategori.php?id=<?php echo $data['id_kategori'];?>" class="badge text-bg-warning text-decoration-none">ubah</a>
-                        <a href="hapus-kategori.php?p=<?php echo $data['id_kategori']; ?>" onclick="return confirm('Yakin ingin menghapus data ini?');" class="badge text-bg-danger text-decoration-none" >Hapus</a>
-                        </td>
-                    </tr>
-                    <?php $i++;?>
+                <?php if ($jumlahKategori > 0) : ?>
+                    <?php $i = 1; ?>
+                    <?php foreach ($queryKategori as $data) : ?>
+                        <tr>
+                            <td><?php echo $i; ?></td>
+                            <td><?php echo $data['nama_kategori'] ?></td>
+                            <td>
+                                <a href="ubah-kategori.php?id=<?php echo $data['id_kategori']; ?>" class="badge text-bg-warning text-decoration-none">ubah</a>
+                                <a href="hapus-kategori.php?p=<?php echo $data['id_kategori']; ?>" onclick="return confirm('Yakin ingin menghapus data ini?');" class="badge text-bg-danger text-decoration-none">Hapus</a>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </tbody>
@@ -98,7 +110,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
-        Tambah Kategori
+            Tambah Kategori
         </button>
 
         <!-- Modal -->
@@ -128,6 +140,9 @@
     </div>
     <!-- End modal -->
 
+    <script src="../js/kategori.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
+</body>
+
 </html>

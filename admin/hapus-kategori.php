@@ -1,4 +1,11 @@
 <?php 
+    session_start();
+
+    if(!isset($_SESSION["login"])) {
+      header("location: ../login/login.php");
+      exit;
+    }
+
     require '../koneksi.php';
 
     $id = $_GET["p"];

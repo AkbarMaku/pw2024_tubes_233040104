@@ -1,14 +1,21 @@
 <?php
-    require "../koneksi.php";
+session_start();
 
-    $queryProduk = query("SELECT * FROM produk");
-    $jumlahProduk = count($queryProduk);
+if (!isset($_SESSION["login"])) {
+    header("location: ../login/login.php");
+    exit;
+}
 
-    $kategori = getKategori();
+require "../koneksi.php";
 
-    if(isset($_POST["cariPdk"])) {
-        $queryProduk = cariPdk($_POST["keywordPdk"]);
-    }
+$queryProduk = query("SELECT * FROM produk");
+$jumlahProduk = count($queryProduk);
+
+$kategori = getKategori();
+
+if (isset($_POST["cariPdk"])) {
+    $queryProduk = cariPdk($_POST["keywordPdk"]);
+}
 
 ?>
 
@@ -54,25 +61,28 @@
                     <li class="nav-item me-4">
                         <a class="nav-link" href="kategori.php">Kategori</a>
                     </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="logout.php">Logout</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search" action="" method="POST">
-                    <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="keywordPdk" autofocus autocomplete="off">
-                    <button class="btn btn-outline-success" type="submit" name="cariPdk">Cari</button>
+                    <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" name="keywordPdk" autofocus autocomplete="off" id="keywordPdk">
+                    <button class="btn btn-outline-success" type="submit" name="cariPdk" id="cariPdk">Cari</button>
                 </form>
             </div>
         </div>
     </nav>
     <!-- End navbar -->
 
-    <div class="container mt-3">
+    <div class="container mt-3" id="container">
         <div class="row">
             <?php foreach ($queryProduk as $data) : ?>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-3">
                     <div class="card" style="width: 18rem;">
                         <img src="<?= $data['img'] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?= $data['nama_produk'] ?></h5>
-                            <p class="card-text"><?= $data['harga_produk'] ?></p>
+                            <p class="card-text"><?= "Rp " . number_format($data['harga_produk'], 2, ',', '.'); ?></p>
                             <a href="detail-produk.php?id_produk=<?= $data['id_produk'] ?>" class="btn btn-primary">Lihat detail produk</a>
                         </div>
                     </div>
@@ -131,6 +141,7 @@
     </div>
     <!-- End modal -->
 
+    <script src="../js/produk.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

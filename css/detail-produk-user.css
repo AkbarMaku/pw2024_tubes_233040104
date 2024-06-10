@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+body {
+    background-color: var(--warna);
+    color: var(--putih);
+}
+:root {
+    --warna:#2C2F31;
+    --warna_2:#383c3d;
+    --black:#020403;
+    --putih:#f5fefd;
+    --biru:#63c5da;
+}
+.beranda {
+    color: var(--putih);
+}
+.beranda:hover {
+    color: var(--black);
+}
+.container-detail {
+    border: 2px solid black;
+    margin-bottom: 20px;
+    padding: 0;
+}
+.text {
+    border-bottom:2px solid black;
+}
+.detail img {
+    width: 100%;
+}
+.detail h4 {
+    margin-top: 20px;
+}
+.deskripsi p {
+    padding: 0 12px;
+}
+.tombol {
+    margin-bottom: 20px;
+    padding: 0 12px;
+}
+.btn-back {
+    background-color: var(--warna_2);
+    border: 2px solid var(--warna);
+    color: var(--putih);
+    border: 1px solid var(--black);
+}
+.btn-back:hover {
+    background-color: var(--warna);
+    border: 1px solid var(--putih);
+}
+.btn-buy {
+    background-color: var(--warna_2);
+    border: 2px solid var(--warna);
+    color: var(--putih);
+    border: 1px solid var(--black);
+}
+.btn-buy:hover {
+    background-color: var(--warna);
+    border: 1px solid var(--putih);
+}

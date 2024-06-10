@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: var(--warna);
+    color: var(--putih);
+}
+
+:root {
+    --warna: #2C2F31;
+    --warna_2: #383c3d;
+    --black: #020403;
+    --putih: #f5fefd;
+    --biru: #63c5da;
+}
+
+.card {
+    background: var(--warna_2);
+    color: var(--putih);
+}
+
+.card-body a {
+    background: var(--warna);
+    border: 1px solid var(--black);
+}
+
+.card-body a:hover {
+    background: var(--warna_2);
+    border: 1px solid var(--putih);
+}

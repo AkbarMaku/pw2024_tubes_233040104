@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if(!isset($_SESSION["login"])) {
+  header("location: ../login/login.php");
+  exit;
+}
+
 require '../koneksi.php';
 
 $id = $_GET['id_produk'];
@@ -9,7 +16,7 @@ $data = mysqli_fetch_array($query);
 $kategori = getKategori();
 
 if(isset($_POST["ubahBtn"])) {
-    if(ubah($_POST) > 0) {
+    if(ubahPdk($_POST) > 0) {
         echo "<script>
             alert('Data berhasil diubah');
             document.location='produk.php';
@@ -34,7 +41,7 @@ if(isset($_POST["ubahBtn"])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- End meta -->
-    <title>Ubah Kategori</title>
+    <title>Ubah Produk</title>
 
     <!-- Link -->
     <link rel="icon" href="../image/logo.jpg">
@@ -82,6 +89,7 @@ if(isset($_POST["ubahBtn"])) {
                     <input type="text" class="form-control" name="kodePdk" id="kodePdk" value=" <?= $data['kode_produk']; ?>">
                     <label for="kategori" class="form-label">Gambar produk</label>
                     <input type="file" class="form-control" name="img" id="img" value=" <?= $data['img']; ?>">
+                    <img src="<?= $data['img']; ?>" alt="Gambar Produk" width="100">
                     <select class="form-select mt-3" aria-label="Default select example" name="id_kategori">
                         <option selected>Kategori</option>
                         <?php foreach ($kategori as $kat) : ?>
